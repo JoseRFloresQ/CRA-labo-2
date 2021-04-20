@@ -17,8 +17,10 @@ oracion_compuesta(oc(OSUB, GV)) --> oracion_subordinada(OSUB), grupo_verbal(GV).
 oracion_compuesta(oc(GN, GV)) --> grupo_nominal_v(GN), grupo_verbal(GV).
 oracion_compuesta(oc(GN,GV,C,GV2)) -->  grupo_nominal_v(GN),  grupo_verbal(GV),conjuncion(C),grupo_verbal(GV2).
 oracion_compuesta(oc(GN,GV,C,GV2,C2,GV3)) -->  grupo_nominal_v(GN),  grupo_verbal(GV),conjuncion(C),grupo_verbal(GV2),conjuncion(C2),grupo_verbal(GV3).
+oracion_compuesta(oc(OC1, C1, OC2, C2, OS)) --> oracion_compuesta(OC1), conjuncion(C1), oracion_compuesta(OC2), conjuncion(C2), oracion_simple(OS).
 oracion_compuesta(oc(OS, C, OS2)) --> oracion_simple(OS), conjuncion(C), oracion_simple(OS2).
 oracion_compuesta(oc(OC, C, OS)) --> oracion_compuesta(OC), conjuncion(C), oracion_simple(OS).
+
 
 %grupos nominales
 grupo_nominal(gn(DET,N)) --> determinante(DET), nombre_comun(N).
@@ -51,6 +53,7 @@ grupo_adverbial(gadv(ADV)) --> adverbio(ADV).
 %grupos verbales
 grupo_verbal(gv(V, GN)) --> verbo(V), grupo_nominal_v(GN).
 grupo_verbal(gv(V, GN, GP)) --> verbo(V), grupo_nominal(GN), grupo_preposicional(GP).
+grupo_verbal(gv(V, GP1,GP2)) --> verbo(V), grupo_preposicional(GP1), grupo_preposicional(GP2).
 grupo_verbal(gv(V, GP)) --> verbo(V), grupo_preposicional(GP).
 grupo_verbal(gv(V, GP,GN)) --> verbo(V), grupo_preposicional(GP), grupo_nominal(GN).
 grupo_verbal(gv(V, GADV,GN)) --> verbo(V), grupo_adverbial(GADV), grupo_nominal_v(GN).

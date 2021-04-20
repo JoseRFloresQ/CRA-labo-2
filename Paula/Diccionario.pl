@@ -80,6 +80,12 @@ n(clase).
 n(todos).
 n(noche).
 n(esperanza).
+n('periódico').
+n(vecino).
+n(tardes).
+n('rocódromo').
+n(zumo).
+n(novela).
 
 %nombre propios
 nombre_propio(np(X)) --> [X],{np(X)}.
@@ -90,6 +96,9 @@ np('héctor').
 np(madrid).
 np(ana).
 np('alcalá').
+np(barcelona).
+np('filosofía').
+np(derecho).
 
 %pronombres
 pronombre(pr(X)) --> [X],{pr(X)}.
@@ -121,6 +130,7 @@ v(recoge).
 v(toma).
 v(salta).
 v(beben).
+v(bebe).
 v(habla).
 v('sonríe').
 v('fue ayudada').
@@ -128,6 +138,8 @@ v(llueve).
 v('se comportaron').
 v('saldré').
 v(depende).
+v(lee).
+v(escala).
 
 %adjetivos
 adjetivo(adj(X)) --> [X],{adj(X)}.
@@ -146,11 +158,12 @@ adj(moreno).
 adj(alta).
 adj(potente).
 adj(alegre).
+adj('ágil').
 
 % adj(morena).
 % adj(rubio).
 % adj(alto).
-% adj(agil).
+
 
 %advervios
 adverbio(adv(X)) --> [X],{adv(X)}.
@@ -161,6 +174,7 @@ adv(solamente).
 adv(claramente).
 adv(nunca).
 adv(bien).
+adv(ayer).
 
 %conjunciones
 %conjuncion coordinada
