@@ -1,3 +1,5 @@
+:-consult('draw').
+
 % TIPOS DE ORACIONES
 % ====================
 

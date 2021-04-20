@@ -25,7 +25,8 @@ oracion(o(GAdv, GV)) --> g_adverbial(GAdv), g_verbal(GV).
 % GRUPOS SINTÁCTICOS
 % ====================
 
-
+g_nom_gen(gng(GN1,C,GN2)) --> g_nominal(GN1), conjunción(C), g_nominal(GN2).
+g_nom_gen(gng(GN)) --> g_nominal(GN).
 
 % Grupo Nominal (gn)
 
