@@ -5,17 +5,13 @@
 
 % Oración Simple (o)
 
-% oracion(o(GNG,GV)) --> g_nom_gen(GNG), g_verbal(GV).
-% oracion(o(GV)) --> g_verbal(GV).
-% oracion(o(GAdv, GV)) --> g_adverbial(GAdv), g_verbal(GV).
-
 oracion(o(Suj,Pred)) --> sujeto(Suj), predicado(Pred).
 oracion(o(Pred)) --> predicado(Pred).
 
-sujeto(sj(GNG)) --> g_nom_gen(GNG).
+sujeto(sj(GNG)) --> g_nominal(GNG).
 
 predicado(pred(GV)) --> g_verbal(GV).
-predicado(pred(GAdv,GV)) --> g_adverbial, g_verbal(GV).
+predicado(pred(GAdv,GV)) --> g_adverbial(GAdv), g_verbal(GV).
 
 
 % Oración Coordinada (oc)
@@ -38,20 +34,15 @@ predicado(pred(GAdv,GV)) --> g_adverbial, g_verbal(GV).
 
 
 % Grupo Nominal (gn)
-
-g_nominal(gn(N)) --> nombre(N).
-g_nominal(gn(N, GP)) --> nombre(N), g_prep(GP).
-g_nominal(gn(N,GA)) --> nombre(N), g_adjetival(GA).
-g_nominal(gn(D,N)) --> determinante(D), nombre(N).
-g_nominal(gn(D,N,GA)) --> determinante(D), nombre(N), g_adjetival(GA).
-g_nominal(gn(D,N,GP)) --> determinante(D), nombre(N), g_prep(GP).
+g_nominal(gn(GNS)) --> g_nominal_s(GNS).
+g_nominal(gn(GNS1,C,GNS2)) --> g_nominal_s(GNS1), conjuncion(C), g_nominal_s(GNS2).
 
 
 % Grupo Adjetival (gadj)
 
 g_adjetival(gadj(Adj)) --> adjetivo(Adj).
 g_adjetival(gadj(Adv,Adj)) --> adverbio(Adv), g_adjetival(Adj).
-g_adjetival(gadj(Adv,Adj,GP)) --> adverbio(Adv), g_adjetival(Adj), g_prop(GP).
+g_adjetival(gadj(Adv,Adj,GP)) --> adverbio(Adv), g_adjetival(Adj), g_prep(GP).
 
 
 % Grupo Adverbial (gadv)
@@ -61,23 +52,35 @@ g_adverbial(gadv(Adv)) --> adverbio(Adv).
 
 % Grupo Preposicional (gp)
 
-g_prep(gp(P,GNG)) --> preposicion(P), g_nom_gen(GNG).
+g_prep(gp(P,GNG)) --> preposicion(P), g_nominal(GNG).
 
 
 %Grupo Verbal (gv)
 
-g_verbal(gv(GVB)) --> g_verbo(GVB).
-g_verbal(gv(GVB,GNG,GP)) --> g_verbo(GVB), g_nom_gen(GNG), g_prep(GP).
-g_verbal(gv(GVB,GNG)) --> g_verbo(GVB), g_nom_gen(GNG).
-g_verbal(gv(GVB,GA)) --> g_verbo(GVB), g_adjetival(GA).
-g_verbal(gv(GVB,GP)) --> g_verbo(GVB), g_prop(GP).
-g_verbal(gv(GVB,GAdv,GP)) --> g_verbo(GVB), g_adverbial(GAdv).
-g_verbal(gv(GVB,GAdv,GP)) --> g_verbo(GVB), g_adverbial(GAdv), g_prep(GP).
+g_verbal(gv(V)) --> verbo(V).
+g_verbal(gv(V,GNG,GP)) --> verbo(V), g_nominal(GNG), g_prep(GP).
+g_verbal(gv(V,GNG)) --> verbo(V), g_nominal(GNG).
+g_verbal(gv(V,GA)) --> verbo(V), g_adjetival(GA).
+g_verbal(gv(V,GP)) --> verbo(V), g_prep(GP).
+g_verbal(gv(V,GAdv,GP)) --> verbo(V), g_adverbial(GAdv).
+g_verbal(gv(V,GAdv,GP)) --> verbo(V), g_adverbial(GAdv), g_prep(GP).
+
 
 % OTROS
 
-g_nom_gen(gng(GN1,C,GN2)) --> g_nominal(GN1), conjunción(C), g_nominal(GN2).
-g_nom_gen(gng(GN)) --> g_nominal(GN).
+% Grupo nominal simple
+g_nominal_s(gns(N)) --> nombre(N).
+g_nominal_s(gns(N, GP)) --> nombre(N), g_prep(GP).
+g_nominal_s(gns(N,GA)) --> nombre(N), g_adjetival(GA).
+g_nominal_s(gns(D,N)) --> determinante(D), nombre(N).
+g_nominal_s(gns(D,N,GA)) --> determinante(D), nombre(N), g_adjetival(GA).
+g_nominal_s(gns(D,N,GP)) --> determinante(D), nombre(N), g_prep(GP).
+g_nominal_s(gns(NP)) --> nombre_prop(NP).
+g_nominal_s(gns(NP, GP)) --> nombre_prop(NP), g_prep(GP).
+g_nominal_s(gns(NP,GA)) --> nombre_prop(NP), g_adjetival(GA).
+g_nominal_s(gns(D,NP)) --> determinante(D), nombre_prop(NP).
+g_nominal_s(gns(D,NP,GA)) --> determinante(D), nombre_prop(NP), g_adjetival(GA).
+g_nominal_s(gns(D,NP,GP)) --> determinante(D), nombre_prop(NP), g_prep(GP).
 
 
 % TIPOS DE TÉRMINOS
@@ -125,7 +128,7 @@ n(nacimiento).
 
 % Nombres Propios (np)
 
-nombre_prop(n(X)) --> [X],{np(X)}.
+nombre_prop(np(X)) --> [X],{np(X)}.
 np(juan).
 np(maría).
 np(ana).
@@ -134,8 +137,8 @@ np(alcalá).
 
 % Verbos (v)
 
-verbo(v(Aux,Pri)) --> auxiliar(Aux), principal(Pri).
 verbo(v(X)) --> [X],{v(X)}.
+verbo(v(Aux,Pri)) --> auxiliar(Aux), principal(Pri).
 v(ama).
 v(come).
 v(comen).
@@ -214,8 +217,17 @@ apt2_9():- oracion(X,[la,manzana,come,un,gato],[]), draw(X).
 apt2_10():- oracion(X,[la,universidad,es,grande],[]), draw(X).
 
 
-
 % APARTADO 3
+
+
+apt3_1():- oracion(X,[juan,y,maría,comen,una,manzana,con,un,tenedor,y,un,cuchillo],[]), draw(X).
+apt3_2():- oracion(X,[maría,hace,la,práctica,de,juan],[]), draw(X).
+apt3_3():- oracion(X,[mi,casa,está,muy,lejos,de,madrid],[]), draw(X).
+apt3_4():- oracion(X,[ana,fue,ayudada,por,un,enfermero],[]), draw(X).
+apt3_5():- oracion(X,[nunca,llueve,en,el,desierto],[]), draw(X).
+apt3_6():- oracion(X,[todos,se,comportaron,bien,en,clase],[]), draw(X).
+apt3_7():- oracion(X,[esta,noche,saldré,por,alcalá],[]), draw(X).
+apt3_8():- oracion(X,[la,esperanza,de,vida,de,un,niño,depende,de,su,lugar,de,nacimiento],[]), draw(X).
 
 
 % PRACTICA 2
