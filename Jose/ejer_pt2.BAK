@@ -106,6 +106,7 @@ ax(se).
 v_principal(vpri(X)) --> [X],{vpri(X)}.
 vpri(ayudada).
 vpri(portaron).
+vpri(comportaron).
 
 adjetivo(adj(X)) --> [X],{adj(X)}.
 adj(roja).

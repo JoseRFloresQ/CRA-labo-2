@@ -26,7 +26,6 @@ g_verbal(gv(GVB,GAdv,GP)) --> g_verbo(GVB), g_adverbial(GAdv).
 g_verbal(gv(GVB,GAdv,GP)) --> g_verbo(GVB), g_adverbial(GAdv), g_prop(GP).
 
 g_verbo(gvb(V)) --> verbo(V).
-g_verbo(gvb(Ax,VPri)) --> auxiliar(Ax), v_principal(VPri).
 
 g_adverbial(gadv(Adv)) --> adverbio(Adv).
 
@@ -55,8 +54,6 @@ adv(bien).
 nombre(n(X)) --> [X],{n(X)}.
 n(hombre).
 n(mujer).
-n(juan).
-n(maría).
 n(manzana).
 n(manzanas).
 n(gato).
@@ -69,14 +66,11 @@ n(cuchillo).
 n(mango).
 n(práctica).
 n(casa).
-n(madrid).
-n(ana).
 n(enfermero).
 n(desierto).
 n(clase).
 n(todos).
 n(noche).
-n(alcalá).
 n(esperanza).
 n(vida).
 n(niño).
