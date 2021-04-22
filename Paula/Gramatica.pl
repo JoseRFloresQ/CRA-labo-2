@@ -2,8 +2,8 @@
 % Fecha: 22/03/2021
 
 %oraciones simples y compuestas
-oracion(o(OS)) --> oracion_simple(OS).
 oracion(o(OC)) --> oracion_compuesta(OC).
+oracion(o(OS)) --> oracion_simple(OS).
 
 %oraciones simples
 oracion_simple(os(GN,GV)) --> grupo_nominal_v(GN), grupo_verbal(GV).
@@ -13,14 +13,17 @@ oracion_simple(os(GV)) --> grupo_verbal(GV).
 oracion_subordinada(osub(GN,CS,GV)) --> grupo_nominal_v(GN), conjuncion_subordinada(CS), grupo_verbal(GV).
 oracion_subordinada(osub(CS,GV)) --> conjuncion_subordinada(CS),grupo_verbal(GV).
 oracion_compuesta(oc(OSUB, GV)) --> oracion_subordinada(OSUB), grupo_verbal(GV).
+oracion_compuesta(oc(OS1, C1, OS2, C2, OS3, C3, OS4)) --> oracion_simple(OS1), conjuncion(C1), oracion_simple(OS2), conjuncion(C2), oracion_simple(OS3), conjuncion(C3), oracion_simple(OS4).
+oracion_compuesta(oc(OS1, C1, OS2, C2, OS3)) --> oracion_simple(OS1), conjuncion(C1), oracion_simple(OS2), conjuncion(C2), oracion_simple(OS3).
+oracion_compuesta(oc(OS, C, OS2)) --> oracion_simple(OS), conjuncion(C), oracion_simple(OS2).
+
 oracion_compuesta(oc(GN, GV)) --> grupo_nominal_v(GN), grupo_verbal(GV).
 oracion_compuesta(oc(GN,GV,C,GV2)) -->  grupo_nominal_v(GN),  grupo_verbal(GV),conjuncion(C),grupo_verbal(GV2).
 oracion_compuesta(oc(GN,GV,C,GV2,C2,GV3)) -->  grupo_nominal_v(GN),  grupo_verbal(GV),conjuncion(C),grupo_verbal(GV2),conjuncion(C2),grupo_verbal(GV3).
-oracion_compuesta(oc(OC1, C1, OC2, C2, OS)) --> oracion_compuesta(OC1), conjuncion(C1), oracion_compuesta(OC2), conjuncion(C2), oracion_simple(OS).
-oracion_compuesta(oc(OS, C, OS2)) --> oracion_simple(OS), conjuncion(C), oracion_simple(OS2).
+
 oracion_compuesta(oc(OC, C, OS)) --> oracion_compuesta(OC), conjuncion(C), oracion_simple(OS).
 
-
+       
 %grupos nominales
 grupo_nominal(gn(DET,N)) --> determinante(DET), nombre_comun(N).
 grupo_nominal(gn(DET,N,ADJ)) --> determinante(DET), nombre_comun(N), adjetivo(ADJ).

@@ -86,6 +86,7 @@ n(tardes).
 n('rocódromo').
 n(zumo).
 n(novela).
+n(paella).
 
 %nombre propios
 nombre_propio(np(X)) --> [X],{np(X)}.
@@ -140,6 +141,7 @@ v('saldré').
 v(depende).
 v(lee).
 v(escala).
+v(prefiere).
 
 %adjetivos
 adjetivo(adj(X)) --> [X],{adj(X)}.
