@@ -59,7 +59,7 @@ test02:- oracion(X,[juan,estudia,'filosofía',pero,'maría',estudia,derecho],[]),d
 test03:- oracion(X,['maría',toma,un,'café',mientras,juan,recoge,la,mesa],[]),draw(X).   %correcto
 test04:- oracion(X,[juan,toma,'café',y,lee,el,'periódico'],[]),draw(X).                 %correcto
 test05:- oracion(X,[juan,y,'héctor',comen,patatas,fritas,y,beben,cerveza],[]),draw(X).  %correcto
-test06:- oracion(X,[juan,come,patatas,fritas,pero,'maría',prefiere,paella,aunque,hector,toma,'café',e,irene,lee,una,novela],[]),draw(X).
+test06:- oracion(X,[juan,come,patatas,fritas,pero,'maría',prefiere,paella,aunque,'héctor',toma,'café',e,irene,lee,una,novela],[]),draw(X).
 test07:- oracion(X,[irene,canta,y,salta,mientras,juan,estudia],[]),draw(X). %correcto
 test08:- oracion(X,['héctor',come,patatas,fritas,y,bebe,zumo,mientras,juan,canta,y,salta,aunque,'maría',lee,una,novela],[]),draw(X).
 test09:- oracion(X,[juan,que,es,muy,'ágil',escala,en,el,'rocódromo',por,las,tardes],[]),draw(X). %correcto
