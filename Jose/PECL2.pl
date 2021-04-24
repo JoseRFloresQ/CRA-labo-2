@@ -400,6 +400,9 @@ apt3_8():- oracion(X,[la,esperanza,de,vida,de,un,niño,depende,de,su,lugar,de,nac
 
 % PRACTICA 2
 
+pract2():- pract2_1(), pract2_2(), pract2_3(), pract2_4(), pract2_5(), pract2_6(), pract2_7(),
+           pract2_8(), pract2_9(), pract2_10(), pract2_11(), pract2_12(), pract2_13(), pract2_14().
+
 pract2_1():- oracion(X,[juan,es,moreno,y,maría,es,alta],[]), draw(X).
 pract2_2():- oracion(X,[juan,estudia,filosofía,pero,maría,estudia,derecho],[]), draw(X).
 pract2_3():- oracion(X,[maría,toma,un,café,mientras,juan,recoge,la,mesa],[]), draw(X).
@@ -416,6 +419,8 @@ pract2_13():- oracion(X,[el,ratón,que,cazó,el,gato,era,gris],[]), draw(X).
 pract2_14():- oracion(X,[el,hombre,que,vimos,ayer,era,mi,vecino],[]), draw(X).
 
 % PRACTICA 2 CON COMAS
+
+pract2_com():- pract2_9_com(), pract2_10_com().
 
 pract2_9_com():- oracion(X,[juan,',',que,es,ágil,',',escala,el,rocódromo,por,las,tardes],[]), draw(X).
 pract2_10_com():- oracion(X,[juan,',',que,es,muy,delicado,',',come,solamente,manzanas,rojas],[]), draw(X).
@@ -440,13 +445,6 @@ simplificacion_coordinada(o(ocm(oc(o(os(suj(Suj), pred(Pred))), c(_), O1))), [ o
 
 %cuando hay dos coorinadas anidadas, la primera tiene sujeto, la segunda no y la tercera sí.
 simplificacion_coordinada(o(ocm(oc(o(os(suj(Suj),pred(Pred1))), c(_), o(ocm(oc(o(os(pred(Pred2))), c(_), o(os(suj(Suj3),pred(Pred3))))))))), [o(os(suj(Suj),pred(Pred1))), o(os(suj(Suj),pred(Pred2))), o(os(suj(Suj3),pred(Pred3)))]).
-
-
-% cuando hay varias coordinadas anidadas (no funciona)
-% simplificación_coordinada(o(ocm(oc(o(os(suj(Suj),pred(Pred1))), c(_), o(ocm(oc(o(os(pred(Pred2))), c(_), o(ocm(Oc2)))))))), Resultados):- simplificacion_coordinada(o(ocm(Oc2)), RestoOraciones), append([o(os(suj(Suj),pred(Pred1))),o(os(suj(Suj),pred(Pred2)))], RestoOraciones, Resultados).
-
-
-
 
 
 %cuando hay una subordinada en el sujeto
