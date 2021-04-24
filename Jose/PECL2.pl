@@ -137,8 +137,9 @@ g_verbal(gv(VP,CAg)) --> verbo_pasivo(VP), compl_agente(CAg).
 g_nominal_s(gns(N)) --> nombre(N).
 g_nominal_s(gns(N,CN)) --> nombre(N), compl_nombre(CN).
 g_nominal_s(gns(D,N)) --> determinante(D), nombre(N).
-g_nominal_s(gns(D,N,CN)) --> determinante(D), nombre(N), compl_nombre(CN).
 g_nominal_s(gns(D,N,CN1,CN2)) --> determinante(D), nombre(N), compl_nombre(CN1), compl_nombre(CN2).
+g_nominal_s(gns(D,N,CN)) --> determinante(D), nombre(N), compl_nombre(CN).
+
 
 g_nominal_s(gns(NP)) --> nombre_prop(NP).
 g_nominal_s(gns(NP,CN)) --> nombre_prop(NP), compl_nombre(CN).
@@ -418,3 +419,65 @@ pract2_14():- oracion(X,[el,hombre,que,vimos,ayer,era,mi,vecino],[]), draw(X).
 
 pract2_9_com():- oracion(X,[juan,',',que,es,ágil,',',escala,el,rocódromo,por,las,tardes],[]), draw(X).
 pract2_10_com():- oracion(X,[juan,',',que,es,muy,delicado,',',come,solamente,manzanas,rojas],[]), draw(X).
+
+
+% SIMPLIFICACION
+
+%cuando hay una coordinada y dentro de una oracion, una subordinada (caso oracion 11 especifico)
+simplificacion_coordinada(o(ocm(oc(o(os(suj(Suj),pred(gv(Verbo, atr(gn(gns(Det,N,Comp1,compl_n(or(rel(_), pred(Pred2)))))))))), c(_), o(os(Pred3))))) ,[o(os(suj(Suj), pred(gv(Verbo, atr(gn(gns(Det,N, Comp1))))))), o(os(suj(Suj),pred(Pred2))), o(os(suj(Suj),pred(Pred3)))]).
+
+% cuando hay sujeto compuesto y dos coordinadas
+simplificacion_coordinada( o(ocm(oc(o(os(suj(gn(gns(Suj1), c(_), gns(Suj2))),pred(Pred1))), c(_), o(os(Pred2))))) ,[ o(os(suj(Suj1),pred(Pred1))), o(os(suj(Suj2), pred(Pred1))), o(os(suj(Suj2), pred(Pred2))), o(os(suj(Suj1), pred(Pred2)))]).
+
+% cuando hay dos coordinadas, ambas con sujeto
+simplificacion_coordinada(o(ocm(oc(o(os(suj(Suj1),pred(Pred1))), c(_), o(os(suj(Suj2),pred(Pred2)))))), [o(os(suj(Suj1),pred(Pred1))),o(os(suj(Suj2),pred(Pred2)))]).
+
+%cuando hay dos coordinadas, una con sujeto y la otra sin sujeto
+simplificacion_coordinada(o(ocm(oc(o(os(suj(Suj),pred(Pred1))), c(_), o(os(pred(Pred2)))))), [o(os(suj(Suj),pred(Pred1))),o(os(suj(Suj),pred(Pred2)))]).
+
+%cuando hay mas de dos coordinadas, todas con sujeto
+simplificacion_coordinada(o(ocm(oc(o(os(suj(Suj), pred(Pred))), c(_), O1))), [ o(os(suj(Suj),pred(Pred))) | RestoOraciones]):- simplificacion_coordinada(O1, RestoOraciones).
+
+%cuando hay dos coorinadas anidadas, la primera tiene sujeto, la segunda no y la tercera sí.
+simplificacion_coordinada(o(ocm(oc(o(os(suj(Suj),pred(Pred1))), c(_), o(ocm(oc(o(os(pred(Pred2))), c(_), o(os(suj(Suj3),pred(Pred3))))))))), [o(os(suj(Suj),pred(Pred1))), o(os(suj(Suj),pred(Pred2))), o(os(suj(Suj3),pred(Pred3)))]).
+
+
+% cuando hay varias coordinadas anidadas (no funciona)
+% simplificación_coordinada(o(ocm(oc(o(os(suj(Suj),pred(Pred1))), c(_), o(ocm(oc(o(os(pred(Pred2))), c(_), o(ocm(Oc2)))))))), Resultados):- simplificacion_coordinada(o(ocm(Oc2)), RestoOraciones), append([o(os(suj(Suj),pred(Pred1))),o(os(suj(Suj),pred(Pred2)))], RestoOraciones, Resultados).
+
+
+
+
+
+%cuando hay una subordinada en el sujeto
+ simplificacion_subordinada(o(os(suj(gn(gns(Suj,compl_n(or(rel(_), pred(Pred1)))))),pred(Pred2))), [o(os(suj(Suj),pred(Pred1))), o(os(suj(Suj),pred(Pred2)))]).
+ simplificacion_subordinada(o(os(suj(gn(gns(Det,Suj,compl_n(or(rel(_), pred(Pred1)))))),pred(Pred2))), [o(os(suj(Det,Suj),pred(Pred1))), o(os(suj(Det,Suj),pred(Pred2)))]).
+ 
+% cuando hay una subordinada en un sujeto, en el que hay determinante, nombre, y dos complementos del nombre
+simplificacion_subordinada(o(os(suj(gn(gns(Det,Suj,compl_n(Comp),compl_n(or(rel(_), pred(Pred1)))))),pred(Pred2))), [o(os(suj(Det,Suj,Comp),pred(Pred1))), o(os(suj(Det,Suj,Comp),pred(Pred2)))]).
+
+
+% INTERFAZ SIMPLIFICACION
+simplificacion(Oracion,Resultados):- simplificacion_coordinada(Oracion,Resultados).
+simplificacion(Oracion, Resultados):- simplificacion_subordinada(Oracion, Resultados).
+
+% Funciones para imprimir las oraciones simplificadas
+imprimir_simplificadas([H|[]]):- draw(H).
+imprimir_simplificadas([H|Resto]):- draw(H), imprimir_simplificadas(Resto).
+
+
+% EJEMPLOS SIMPLIFICACION
+simpl_1():- oracion(X,[juan,toma,café,y,maría,es,alta],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
+simpl_2():- oracion(X,[juan,estudia,filosofía,pero,maría,estudia,derecho],[]),draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
+simpl_3():- oracion(X,[maría,toma,un,café,mientras,juan,recoge,la,mesa],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
+simpl_4():- oracion(X,[juan,toma,café,y,lee,el,periódico],[]), draw(X), simplificacion_coordinada(X,Y), imprimir_simplificadas(Y).
+simpl_5():- oracion(X,[juan,y,héctor,comen,patatas,fritas,y,beben,cerveza],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
+simpl_6():- oracion(X,[juan,come,patatas,fritas,pero,maría,prefiere,paella,aunque,héctor,toma,café,e,irene,lee,una,novela],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
+simpl_7():- oracion(X,[irene,canta,y,salta,mientras,juan,estudia],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
+% simpl_8():- oracion(X,[héctor,come,patatas,fritas,y,bebe,zumo,mientras,juan,canta,y,salta,aunque,maría,lee,una,novela],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
+simpl_9():- oracion(X,[juan,que,es,ágil,escala,el,rocódromo,por,las,tardes],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
+simpl_10():- oracion(X,[juan,que,es,muy,delicado,come,solamente,manzanas,rojas],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
+simpl_11():- oracion(X,[el,procesador,de,textos,que,es,una,herramienta,bastante,potente,sirve,para,escribir,documentos],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
+simpl_12():- oracion(X,[el,procesador,de,textos,es,una,herramienta,bastante,potente,que,sirve,para,escribir,documentos,pero,es,bastante,lento],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
+simpl_13():- oracion(X,[el,ratón,que,cazó,el,gato,era,gris],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
+simpl_14():- oracion(X,[el,hombre,que,vimos,ayer,era,mi,vecino],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
