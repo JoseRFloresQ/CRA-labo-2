@@ -107,6 +107,7 @@ g_prep_finalidad(gpfin(PFin,GV)) --> preposicion_finalidad(PFin), g_verbal(GV).
 % ===================
 % con verbos transitivos
 g_verbal(gv(VT)) --> verbo_transitivo(VT).
+g_verbal(gv(VT,CCT)) --> verbo_transitivo(VT), compl_circ_tiempo(CCT).
 g_verbal(gv(VT,CCF)) --> verbo_transitivo(VT), compl_circ_finalidad(CCF).
 g_verbal(gv(VT,CCM,CD)) --> verbo_transitivo(VT), compl_circ_modo(CCM) ,compl_directo(CD).
 g_verbal(gv(VT,CD)) --> verbo_transitivo(VT), compl_directo(CD).
@@ -254,11 +255,12 @@ v_tran(escala).
 v_tran(sirve).
 v_tran(escribir).
 v_tran(cazó).
+v_tran(vimos).
 
 % verbos intransitivos (v_intran)
 verbo_intransitivo(v_intran(X)) --> [X],{v_intran(X)}.
 v_intran(llueve).
-v_intran(vimos).
+
 
 
 % verbos copulativos (v_cop)
@@ -449,7 +451,10 @@ simplificacion_coordinada(o(ocm(oc(o(os(suj(Suj),pred(Pred1))), c(_), o(ocm(oc(o
 
 %cuando hay una subordinada en el sujeto
  simplificacion_subordinada(o(os(suj(gn(gns(Suj,compl_n(or(rel(_), pred(Pred1)))))),pred(Pred2))), [o(os(suj(Suj),pred(Pred1))), o(os(suj(Suj),pred(Pred2)))]).
- simplificacion_subordinada(o(os(suj(gn(gns(Det,Suj,compl_n(or(rel(_), pred(Pred1)))))),pred(Pred2))), [o(os(suj(Det,Suj),pred(Pred1))), o(os(suj(Det,Suj),pred(Pred2)))]).
+ % simplificacion_subordinada(o(os(suj(gn(gns(Det,Suj,compl_n(or(rel(_), pred(Pred1)))))),pred(Pred2))), [o(os(suj(Det,Suj),pred(Pred1))), o(os(suj(Det,Suj),pred(Pred2)))]).
+
+simplificacion_subordinada(o(os(suj(gn(gns(Det,Suj,compl_n(or(rel(_), pred(gv(v_tran(Verbo),cd(Cd)))))))),pred(Pred2))), [o(os(suj(Cd),pred(gv(v_tran(Verbo), cd(gn(gns(Det,Suj))))))), o(os(suj(Det,Suj),pred(Pred2)))]).
+simplificacion_subordinada(o(os(suj(gn(gns(Det,Suj,compl_n(or(rel(_), pred(gv(v_tran(Verbo), CCT))))))),pred(Pred2))), [o(os(pred(gv(v_tran(Verbo), cd(gn(gns(Det,Suj))),CCT)))), o(os(suj(Det,Suj),pred(Pred2)))]).
  
 % cuando hay una subordinada en un sujeto, en el que hay determinante, nombre, y dos complementos del nombre
 simplificacion_subordinada(o(os(suj(gn(gns(Det,Suj,compl_n(Comp),compl_n(or(rel(_), pred(Pred1)))))),pred(Pred2))), [o(os(suj(Det,Suj,Comp),pred(Pred1))), o(os(suj(Det,Suj,Comp),pred(Pred2)))]).
