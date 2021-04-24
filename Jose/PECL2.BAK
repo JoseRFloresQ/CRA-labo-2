@@ -54,6 +54,7 @@ oracion_coordinada(oc(O1,Conj,O2)) --> oracion(O1), conjuncion(Conj), oracion(O2
 % Oración Subordinada de Relativo (or)
 % ====================================
 oracion_subordinada(or(Nex,Pred)) --> nexo_relativo(Nex), predicado(Pred).
+oracion_subordinada(or(Com1,Nex,Pred,Com2)) --> coma(Com1), nexo_relativo(Nex), predicado(Pred), coma(Com2).
 
 
 
@@ -146,6 +147,7 @@ g_nominal_s(gns(D,NP,CN)) --> determinante(D), nombre_prop(NP), compl_nombre(CN)
 
 
 compl_nombre(compl_n(GAdj)) --> g_adjetival(GAdj).
+compl_nombre(compl_n(GAdv)) --> g_adverbial(GAdv).
 compl_nombre(compl_n(GP)) --> g_prep(GP).
 compl_nombre(compl_n(Or)) --> oracion_subordinada(Or).
 
@@ -355,6 +357,12 @@ prep_fin(para).
 nexo_relativo(rel(X)) -->[X],{rel(X)}.
 rel(que).
 
+
+% Coma (com)
+coma(com(X)) --> [X],{X}.
+com(',').
+
+
 % TEST DE PRUEBAS
 % ================
 
@@ -405,3 +413,8 @@ pract2_11():- oracion(X,[el,procesador,de,textos,que,es,una,herramienta,bastante
 pract2_12():- oracion(X,[el,procesador,de,textos,es,una,herramienta,bastante,potente,que,sirve,para,escribir,documentos,pero,es,bastante,lento],[]), draw(X).
 pract2_13():- oracion(X,[el,ratón,que,cazó,el,gato,era,gris],[]), draw(X).
 pract2_14():- oracion(X,[el,hombre,que,vimos,ayer,era,mi,vecino],[]), draw(X).
+
+% PRACTICA 2 CON COMAS
+
+pract2_9_com():- oracion(X,[juan,',',que,es,ágil,',',escala,el,rocódromo,por,las,tardes],[]), draw(X).
+pract2_10_com():- oracion(X,[juan,',',que,es,muy,delicado,',',come,solamente,manzanas,rojas],[]), draw(X).
