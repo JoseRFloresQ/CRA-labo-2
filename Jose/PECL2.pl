@@ -39,8 +39,10 @@ compl_circ_frecuencia(cc_frec(AdvFrec)) --> adverbio_frecuencia(AdvFrec).
 
 compl_agente(c_ag(GPA)) --> g_prep_agente(GPA).
 
+compl_circ_tiempo(cct(GPT)) --> g_prep_tiempo(GPT).
+compl_circ_tiempo(cct(NT)) --> nombre_tiempo(NT).
 
-
+compl_circ_finalidad(ccfin(GPFin)) --> g_prep_finalidad(GPFin).
 
 
 % Oración Coordinada (oc)
@@ -51,7 +53,7 @@ oracion_coordinada(oc(O1,Conj,O2)) --> oracion(O1), conjuncion(Conj), oracion(O2
 
 % Oración Subordinada de Relativo (or)
 % ====================================
-
+oracion_subordinada(or(Nex,Pred)) --> nexo_relativo(Nex), predicado(Pred).
 
 
 
@@ -96,12 +98,18 @@ g_prep_modo(gpm(PM,GN)) --> preposicion_modo(PM), g_nominal(GN).
 
 g_prep_agente(gpa(PA,GN)) --> preposicion_agente(PA), g_nominal(GN).
 
+g_prep_tiempo(gpt(PT,GN)) --> preposicion_tiempo(PT), g_nominal(GN).
+
+g_prep_finalidad(gpfin(PFin,GV)) --> preposicion_finalidad(PFin), g_verbal(GV).
 
 % Grupo Verbal 2.0
 % ===================
 % con verbos transitivos
 g_verbal(gv(VT)) --> verbo_transitivo(VT).
-g_verbal(gv(VT, CD)) --> verbo_transitivo(VT), compl_directo(CD).
+g_verbal(gv(VT,CCF)) --> verbo_transitivo(VT), compl_circ_finalidad(CCF).
+g_verbal(gv(VT,CCM,CD)) --> verbo_transitivo(VT), compl_circ_modo(CCM) ,compl_directo(CD).
+g_verbal(gv(VT,CD)) --> verbo_transitivo(VT), compl_directo(CD).
+g_verbal(gv(VT,CD,CCT)) --> verbo_transitivo(VT), compl_directo(CD), compl_circ_tiempo(CCT).
 g_verbal(gv(PCD,VT)) -->  pronombre_CD(PCD), verbo_transitivo(VT).
 g_verbal(gv(VT,CCL)) --> verbo_transitivo(VT), compl_circ_lugar(CCL).
 g_verbal(gv(VT,CD,CCM)) --> verbo_transitivo(VT), compl_directo(CD), compl_circ_modo(CCM).
@@ -109,10 +117,13 @@ g_verbal(gv(CDRef,VT,CCM,CCL)) --> compl_dir_reflexivo(CDRef), verbo_transitivo(
 
 % con verbos copulativos -->
 g_verbal(gv(VC,Atr)) --> verbo_copulativo(VC), atributo(Atr).
+g_verbal(gv(VC,Atr,Or)) --> verbo_copulativo(VC), atributo(Atr), oracion_subordinada(Or).
+g_verbal(gv(VC,Atr,CCM)) --> verbo_copulativo(VC), atributo(Atr), compl_circ_modo(CCM).
 
 
 % con verbos intransitivos
 g_verbal(gv(CCFrec,VI,CCL)) -->compl_circ_frecuencia(CCFrec), verbo_intransitivo(VI), compl_circ_lugar(CCL).
+g_verbal(gv(VI,CCT)) --> verbo_intransitivo(VI), compl_circ_tiempo(CCT).
 
 
 % con verbos en forma pasiva
@@ -126,6 +137,7 @@ g_nominal_s(gns(N)) --> nombre(N).
 g_nominal_s(gns(N,CN)) --> nombre(N), compl_nombre(CN).
 g_nominal_s(gns(D,N)) --> determinante(D), nombre(N).
 g_nominal_s(gns(D,N,CN)) --> determinante(D), nombre(N), compl_nombre(CN).
+g_nominal_s(gns(D,N,CN1,CN2)) --> determinante(D), nombre(N), compl_nombre(CN1), compl_nombre(CN2).
 
 g_nominal_s(gns(NP)) --> nombre_prop(NP).
 g_nominal_s(gns(NP,CN)) --> nombre_prop(NP), compl_nombre(CN).
@@ -134,8 +146,9 @@ g_nominal_s(gns(D,NP,CN)) --> determinante(D), nombre_prop(NP), compl_nombre(CN)
 
 
 compl_nombre(compl_n(GAdj)) --> g_adjetival(GAdj).
-compl_nombre(compl_n(GP)) -->g_prep(GP).
-
+compl_nombre(compl_n(GAdv)) --> g_adverbial(GAdv).
+compl_nombre(compl_n(GP)) --> g_prep(GP).
+compl_nombre(compl_n(Or)) --> oracion_subordinada(Or).
 
 % TIPOS DE TÉRMINOS
 % ==================
@@ -152,6 +165,7 @@ det(una).
 det(mi).
 det(esta).
 det(su).
+det(las).
 
 % Nombres (n)
 
@@ -190,6 +204,18 @@ n(cerveza).
 n(paella).
 n(novela).
 n(zumo).
+n(rocódromo).
+n(tardes).
+n(procesador).
+n(textos).
+n(herramienta).
+n(documentos).
+n(vecino).
+n(ratón).
+
+% Nombres de tiempo
+nombre_tiempo(n_tp(X)) --> [X],{n_tp(X)}.
+n_tp(ayer).
 
 % Nombres Propios (np)
 
@@ -222,10 +248,15 @@ v_tran(prefiere).
 v_tran(canta).
 v_tran(salta).
 v_tran(bebe).
+v_tran(escala).
+v_tran(sirve).
+v_tran(escribir).
+v_tran(cazó).
 
 % verbos intransitivos (v_intran)
 verbo_intransitivo(v_intran(X)) --> [X],{v_intran(X)}.
 v_intran(llueve).
+v_intran(vimos).
 
 
 % verbos copulativos (v_cop)
@@ -233,6 +264,7 @@ verbo_copulativo(v_cop(X)) --> [X],{v_cop(X)}.
 v_cop(es).
 v_cop(está).
 v_cop(fue).
+v_cop(era).
 
 
 % verbos en forma pasiva (v_pas)
@@ -269,16 +301,23 @@ adj(lejos).
 adj(moreno).
 adj(alta).
 adj(fritas).
-
+adj(ágil).
+adj(potente).
+adj(delicado).
+adj(rojas).
+adj(lento).
 
 % Adverbios (adv)
 
 adverbio(adv(X)) --> [X],{adv(X)}.
 adv(muy).
 adv(bien).
+adv(bastante).
+adv(solamente).
 
 adverbio_frecuencia(adv_frec(X)) --> [X],{adv_frec(X)}.
 adv_frec(nunca).
+
 
 % Conjunciones (conj)
 
@@ -295,6 +334,7 @@ conj(e).
 preposicion(prep(X)) --> [X],{prep(X)}.
 prep(a).
 prep(de).
+prep(para).
 
 preposicion_lugar(prep_l(X)) --> [X],{prep_l(X)}.
 prep_l(en).
@@ -305,6 +345,16 @@ prep_m(con).
 
 preposicion_agente(prep_a(X)) --> [X],{prep_a(X)}.
 prep_a(por).
+
+preposicion_tiempo(prep_t(X)) --> [X],{prep_t(X)}.
+prep_t(por).
+
+preposicion_finalidad(prep_fin(X)) --> [X],{prep_fin(X)}.
+prep_fin(para).
+
+% Nexos Relativos (rel)
+nexo_relativo(rel(X)) -->[X],{rel(X)}.
+rel(que).
 
 % TEST DE PRUEBAS
 % ================
@@ -351,3 +401,8 @@ pract2_6():- oracion(X,[juan,come,patatas,fritas,pero,maría,prefiere,paella,aunq
 pract2_7():- oracion(X,[irene,canta,y,salta,mientras,juan,estudia],[]), draw(X).
 pract2_8():- oracion(X,[héctor,come,patatas,fritas,y,bebe,zumo,mientras,juan,canta,y,salta,aunque,maría,lee,una,novela],[]), draw(X).
 pract2_9():- oracion(X,[juan,que,es,ágil,escala,el,rocódromo,por,las,tardes],[]), draw(X).
+pract2_10():- oracion(X,[juan,que,es,muy,delicado,come,solamente,manzanas,rojas],[]), draw(X).
+pract2_11():- oracion(X,[el,procesador,de,textos,que,es,una,herramienta,bastante,potente,sirve,para,escribir,documentos],[]),draw(X).
+pract2_12():- oracion(X,[el,procesador,de,textos,es,una,herramienta,bastante,potente,que,sirve,para,escribir,documentos,pero,es,bastante,lento],[]), draw(X).
+pract2_13():- oracion(X,[el,ratón,que,cazó,el,gato,era,gris],[]), draw(X).
+pract2_14():- oracion(X,[el,hombre,que,vimos,ayer,era,mi,vecino],[]), draw(X).
