@@ -76,8 +76,6 @@ np(alcalá).
 np(héctor).
 np(irene).
 
-% Verbos (v)
-
 % verbos transitivos (v_tran)
 verbo_transitivo(v_tran(X)) --> [X],{v_tran(X)}.
 v_tran(ama).

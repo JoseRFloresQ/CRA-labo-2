@@ -1,6 +1,6 @@
 :-consult('draw').
 :-consult('AnálisisOraciones').
-:-consult('SimplificarOraciones').
+:-consult('SimplificaciónOraciones').
 
 
 

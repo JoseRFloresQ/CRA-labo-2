@@ -76,8 +76,6 @@ np(alcalá).
 np(héctor).
 np(irene).
 
-% Verbos (v)
-
 % verbos transitivos (v_tran)
 verbo_transitivo(v_tran(X)) --> [X],{v_tran(X)}.
 v_tran(ama).
@@ -185,19 +183,24 @@ prep(a).
 prep(de).
 prep(para).
 
+% Preposiciones de lugar(prep_l)
 preposicion_lugar(prep_l(X)) --> [X],{prep_l(X)}.
 prep_l(en).
 prep_l(por).
 
+% Preposiciones de modo (prep_m)
 preposicion_modo(prep_m(X)) --> [X],{prep_m(X)}.
 prep_m(con).
 
+% Preposicion agente(prep_a)
 preposicion_agente(prep_a(X)) --> [X],{prep_a(X)}.
 prep_a(por).
 
+% Preposiciones de tiempo(prep_t)
 preposicion_tiempo(prep_t(X)) --> [X],{prep_t(X)}.
 prep_t(por).
 
+% Preposiciones de finalidad(prep_fin)
 preposicion_finalidad(prep_fin(X)) --> [X],{prep_fin(X)}.
 prep_fin(para).
 

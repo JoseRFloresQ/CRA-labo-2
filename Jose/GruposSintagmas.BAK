@@ -82,7 +82,3 @@ g_nominal_s(gns(NP)) --> nombre_prop(NP).
 g_nominal_s(gns(NP,CN)) --> nombre_prop(NP), compl_nombre(CN).
 g_nominal_s(gns(D,NP)) --> determinante(D), nombre_prop(NP).
 g_nominal_s(gns(D,NP,CN)) --> determinante(D), nombre_prop(NP), compl_nombre(CN).
-
-
-
-

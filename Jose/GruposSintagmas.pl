@@ -1,4 +1,4 @@
-:-consult('Gramáticas').
+:-consult('Diccionario').
 
 % GRUPOS SINTÁCTICOS/SINTAGMAS
 % ====================
