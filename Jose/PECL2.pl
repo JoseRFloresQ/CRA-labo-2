@@ -76,7 +76,7 @@ simpl_4():- oracion(X,[juan,toma,café,y,lee,el,periódico],[]), draw(X), simplifi
 simpl_5():- oracion(X,[juan,y,héctor,comen,patatas,fritas,y,beben,cerveza],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
 simpl_6():- oracion(X,[juan,come,patatas,fritas,pero,maría,prefiere,paella,aunque,héctor,toma,café,e,irene,lee,una,novela],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
 simpl_7():- oracion(X,[irene,canta,y,salta,mientras,juan,estudia],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
-% simpl_8():- oracion(X,[héctor,come,patatas,fritas,y,bebe,zumo,mientras,juan,canta,y,salta,aunque,maría,lee,una,novela],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
+simpl_8():- oracion(X,[héctor,come,patatas,fritas,y,bebe,zumo,mientras,juan,canta,y,salta,aunque,maría,lee,una,novela],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
 simpl_9():- oracion(X,[juan,que,es,ágil,escala,el,rocódromo,por,las,tardes],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
 simpl_10():- oracion(X,[juan,que,es,muy,delicado,come,solamente,manzanas,rojas],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
 simpl_11():- oracion(X,[el,procesador,de,textos,que,es,una,herramienta,bastante,potente,sirve,para,escribir,documentos],[]), draw(X), simplificacion(X,Y), imprimir_simplificadas(Y).
